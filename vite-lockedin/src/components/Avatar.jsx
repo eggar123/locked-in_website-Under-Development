@@ -9,7 +9,7 @@ import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 export function Avatar(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF("models/prod.kea.avatar.glb");
-  const {animations: standingAnimation} = useFBX("animations/Standing Idle.fbx")
+  const {animations: standingAnimation} = useFBX("animations/Sitting.fbx")
   
   standingAnimation[0].name = "Standing";
   const {actions} = useAnimations(standingAnimation, group)
