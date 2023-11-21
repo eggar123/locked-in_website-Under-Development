@@ -17,7 +17,7 @@ export function Studio(props) {
         <group
           position={[2172.522, 993.558, 2689.763]}
           rotation={[-Math.PI / 2, 0, 1.715]}
-          scale={184.358}
+          scale={4.358}
         >
           <mesh
             castShadow

@@ -20,7 +20,13 @@ useEffect(()=>{
   
   return (
     <group {...props} ref={group} dispose={null}>
-    <group rotation-x={-Math.PI / 2}>
+    <group 
+    //          Y   Z    X
+    position={[-1, -3, -44]}
+    rotation-x={-Math.PI / 2} 
+    
+    rotation={[-Math.PI / 2, 0, -1.8]}
+    scale={9}>
    
       <primitive object={nodes.Hips} />
       <skinnedMesh
