@@ -1,57 +1,114 @@
-import { Center, Environment, MeshPortalMaterial, OrbitControls, RoundedBox, useTexture } from "@react-three/drei";
+import { 
+  Environment, 
+  MeshReflectorMaterial, 
+  Text, 
+  CameraControls, 
+  RenderTexture, 
+  useFont, 
+  Float 
+} from "@react-three/drei";
 import { Avatar } from "./Avatar";
 import { Studio } from "./Studio";
 import * as THREE from "three";
-import { useState } from "react";
-import { Float, Text3D, Shadow } from "@react-three/drei";
+import { useEffect, useRef, useState } from "react";
+import { Stars, Image } from "@react-three/drei";
+import { extend, useFrame } from "@react-three/fiber";
+import { easing, geometry } from "maath";
+import { degToRad } from "three/src/math/MathUtils";
 
 export const Experience = () => {
 
   const [active, setActive] = useState(null)
 
+  const controls = useRef();
+
+  extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry })
+
+  const intro = async () => {
+    controls.current.dolly(-22);
+    controls.current.smoothTime = 1.0;
+    controls.current.dolly(18, true);
+
+
+  }
+
+  useEffect(() => {
+    intro();
+  }, [])
 
 
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <Environment preset="sunset" />
-      <OrbitControls />
+    <Float
+      rotationIntensity={0.1}
+    >
+      <mesh>
 
-    
+        <Stars radius={10} depth={50} count={5000} factor={1} saturation={0} fade speed={0.2} />
+        <meshStandardMaterial />
+      </mesh>
+      </Float>
 
-        <ProducerStage
-          texture={"textures/Cyberpunk_equirectangular-jpg_Recording_studio_with_ambient_1965269463_9586472.jpg"}
-          name="abedz"
-          active={active}
-          setActive={setActive}
-          >
+      <ambientLight intensity={0.5} color={"#fff"} />
+      <Environment preset="night" />
+      <CameraControls ref={controls} />
+      
 
-        </ProducerStage>
+      <Text
+        font={"fonts/Magazine-Cutouts-Font.ttf"}
+        position-x={0}
+        position-y={0.5}
+        position-z={0.2}
+        lineHeight={0.8}
+        textAlign="center"
+        //  rotation-y={degToRad(30)}
+        anchorY={"bottom"}
+      >
 
-        <ProducerStage
-          texture={"textures/Cyberpunk_equirectangular-jpg_Recording_studio_with_ambient_1965269463_9586472.jpg"}
-          name="cronique"
-          position-x={-2.5}
-          rotation-y={Math.PI / 8}
-          active={active}
-          setActive={setActive}
-          >
+        LOCK-IN
+        <meshBasicMaterial color="white">
+          <RenderTexture attach={"map"}>
+            <color attach="background" args={["#000000"]} />
+            <Environment preset="night" />
 
-        </ProducerStage>
+          </RenderTexture>
+        </meshBasicMaterial>
+      </Text>
 
-        <ProducerStage
-          texture={"textures/Cyberpunk_equirectangular-jpg_Recording_studio_with_ambient_1965269463_9586472.jpg"}
-          name="saint"
-          position-x={2.5}
-          rotation-y={-Math.PI / 8}
-          active={active}
-          setActive={setActive}
-          >
+      <Image url="images/bigbrr.png" 
 
-        </ProducerStage>
+      position-y={-0.7}
+      position-z={0.01} 
+      position-x={-0.8} 
+      scale={0.5}>
+        <roundedPlaneGeometry/>
+      </Image>
 
- 
+      <ProducerStage >
+
+      </ProducerStage>
+      <mesh position-y={0.8} rotation-x={-Math.PI / 2}>
+        <planeGeometry args={[100, 100]} />
+        <MeshReflectorMaterial
+          blur={[100, 100]}
+          resolution={2048}
+          mixBlur={1}
+          mixStrength={10}
+          roughness={1}
+          depthScale={1.2}
+          opacity={0.4}
+          transparent
+          minDepthThreshold={0.4}
+          maxDepthThreshold={1.4}
+          color="#333"
+          metalness={0.5}
+        />
+
+      </mesh>
+
+
+
 
     </>
   );
@@ -60,43 +117,25 @@ export const Experience = () => {
 
 
 
-const ProducerStage = ({ children, texture, name, active, setActive, ...props }) => {
-  const map = useTexture(texture);
-  return (<group {...props}>
-      <Float
-        speed={4} // Animation speed, defaults to 1
-        rotationIntensity={0.1} // XYZ rotation intensity, defaults to 1
-        floatIntensity={0.2} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
-        floatingRange={[1, 2]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
-      >
-        <mesh />
-    <Center front >
-      <Text3D
-        font={"../../public/fonts/Rubik Bubbles_Regular.json"}
-        bevelEnabled
-        bevelSize={0.03}
-        size={0.1}
-        height={0}
-        position={[0, 2, 0.05]}
-        letterSpacing={0.1}
-      >
-        {name}
-        <meshNormalMaterial />
-      </Text3D>
-    </Center >
-    </Float>
 
-    <RoundedBox args={[2, 3, 0.1]} onDoubleClick={() => setActive(active === name ? null : name)}>
-      
-      <MeshPortalMaterial side={THREE.DoubleSide} blend={active === name ? 1 : 0}>
-        <ambientLight intensity={1} />
-        <Environment preset="sunset" />
-        {children}
-        <mesh>
-          <sphereGeometry args={[2, 64, 64]} />
-          <meshStandardMaterial map={map} side={THREE.BackSide} />
-        </mesh>
-      </MeshPortalMaterial>
-    </RoundedBox>
+
+
+
+const ProducerStage = ({ ...props }) => {
+
+
+
+  return (<group
+    position-x={-2.2}
+    position-y={-2}
+
+    {...props}>
+
+    <Studio scale={0.6}>
+
+    </Studio>
+
   </group>)
 }
+
+useFont.preload("fonts/Magazine-Cutouts-Font.ttf");

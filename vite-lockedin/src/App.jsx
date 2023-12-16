@@ -7,11 +7,12 @@ function App() {
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
-    return <Html center className="progress">{Math.round(progress)} % loaded</Html>
+    return <Html center color="white" className="progress">{Math.round(progress)} % loaded</Html>
   }
   return (
     
-    <Canvas shadows camera={{ position: [0, 0, 10], fov: 30}}>
+    <Canvas shadows camera={{ position: [0, 0, 8], fov: 42}}>
+      <color attach="background" args={["#000000"]}/>
       <Suspense fallback={<Loader/>}>
      
       <ScrollControls pages={6} damping={0.1}>
