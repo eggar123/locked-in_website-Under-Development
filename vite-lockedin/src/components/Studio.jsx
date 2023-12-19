@@ -32,20 +32,8 @@ export function Studio(props) {
           geometry={nodes.Object_3.geometry}
           material={materials["Material.002"]}
         />
-        <mesh
-          name="Object_4"
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_4.geometry}
-          material={materials["Material.013"]}
-        />
-        <mesh
-          name="Object_5"
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_5.geometry}
-          material={materials["Material.017"]}
-        />
+        
+      
         <mesh
           name="Object_6"
           castShadow
