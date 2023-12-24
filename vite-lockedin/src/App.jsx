@@ -7,7 +7,7 @@ function App() {
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
-    return <Html center color="white" className="progress">{Math.round(progress)} % loaded</Html>
+    return <Html center color="blue" className="progress">{Math.round(progress)} % loaded</Html>
   }
   return (
     

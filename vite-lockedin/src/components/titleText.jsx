@@ -13,7 +13,7 @@ export function TitleText (props) {
                 position-x={0}
                 position-y={0.5}
                 position-z={0.2}
-                lineHeight={0.8}
+                lineHeight={2.2}
                 textAlign="center"
                 anchorY={"bottom"}
             >

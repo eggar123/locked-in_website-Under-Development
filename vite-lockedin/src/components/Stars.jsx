@@ -9,7 +9,7 @@ export function Stjerner(props) {
             >
                 <mesh>
 
-                    <Stars radius={10} depth={50} count={5000} factor={1} saturation={0} fade speed={0.2} />
+                    <Stars radius={10} depth={25} count={5000} factor={1} saturation={1} fade speed={0.1} />
                     <meshStandardMaterial />
                 </mesh>
             </Float>
