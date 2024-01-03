@@ -4,10 +4,103 @@ import {
     RenderTexture,
     useFont,
     Float,
-    CameraControls
+    CameraControls,
+    Image,
+    Gltf
 } from "@react-three/drei";
+import { useThree, useFrame } from "@react-three/fiber";
 import { useEffect, useState, useRef } from "react";
 import * as THREE from 'three';
+import { BigTest } from "./test";
+import { Avatar } from "./Avatar";
+
+
+export const membersArray = [
+    {
+        title: "Hanprodusenten",
+        url: "https://www.instagram.com/hanprodusenten/",
+        image: "/models/ImageToStl.com_jens-removebg-preview.glb",
+        description: "Produced songs for Daniel Obede, Primz, Henny etc.",
+    },
+    {
+        title: "Kea",
+        url: "https://www.instagram.com/kristian_ea/",
+        image: "/models/lowpoly_berlin_street_at_night.glb",
+        description: "Produced songs for Space2k, Steven Fendi, Sli0h etc",
+    },
+    {
+        title: "Abedz",
+        url: "https://www.instagram.com/saianabedi/",
+        image: "/models/ImageToStl.com_jens-removebg-preview.glb",
+        description: "Produced songs for Michael Jackson, Pop Smoke, Prince etc.",
+    },
+
+
+
+
+
+
+]
+
+const Member = (props) => {
+    const { member } = props;
+    const [hovered, setHovered] = useState("")
+
+    useEffect(() => {
+        document.body.style.cursor = hovered ? 'pointer' : 'auto'
+        return () => document.body.style.cursor = 'auto';
+    }, [hovered])
+
+    useFrame(() => {
+
+    })
+
+    return (
+        <group {...props}>
+
+
+            <Gltf
+                src={member.image}
+                onPointerEnter={() => setHovered(true)}
+                onPointerLeave={() => setHovered(false)}
+                onClick={() => window.open(member.url, "_blank")}
+                scale={hovered ? 0.06 : 0.05}
+                color={hovered ? "yellow" : "red"}
+                // uuid={member.image}
+                position-y={0}
+                rotation-x={1.6} />
+        </group>
+    )
+}
+
+export const Members = () => {
+
+
+
+    return (
+
+
+
+
+
+        <group
+            position-y={-20}
+        >
+
+            {membersArray.map((member, index) => (
+                <group
+                    key={"project_" + index} position={[
+                        index * 5, 0, -3
+                    ]}
+                >
+
+                    <Member member={member} />
+                </group>
+            ))}
+        </group>
+    );
+};
+/*
 
 export function Members(props) {
 
@@ -22,53 +115,12 @@ export function Members(props) {
     return (
         <>
 
-
-            <Text
-                font={"fonts/Magazine-Cutouts-Font.ttf"}
-                position-x={0}
-                position-y={0.5}
-                position-z={0.2}
-                lineHeight={2.2}
-                textAlign="center"
-                anchorY={"bottom"}
-            >
-                MEMBERS
-                <meshBasicMaterial color="white">
-                    <RenderTexture attach={"map"}>
-                        <color attach="background" args={["#fff"]} />
-                        <Environment preset="night" />
-
-                    </RenderTexture>
-                </meshBasicMaterial>
-            </Text>
-            <Text
-
-                onPointerEnter={() => setHovered(true)}
-                onPointerLeave={() => setHovered(false)}
-
-                font={"fonts/Magazine-Cutouts-Font.ttf"}
-                scale={hovered ? 0.5 : 0.45}
-                position-x={0}
-                position-y={-3.2}
-                position-z={0.2}
-                lineHeight={2}
-                textAlign="center"
-                anchorY={"bottom"}
-            >
-                @hanprodusenten @zyxree @moosavi {"\n"}
-                @reset @jens @adamMB {"\n"}
-                @abedz @saint @chronique {"\n"}
-                       @kea 
-
-                <meshBasicMaterial color={hovered ? 0xffff00 : 0xffffff}>
-                    <RenderTexture attach={"map"}>
-                        <color attach="background" args={["#fff"]} />
-                        <Environment preset="night" />
-                    </RenderTexture>
-                </meshBasicMaterial>
-            </Text>
         </>
+        
     );
+    
 };
 
-useFont.preload("fonts/Magazine-Cutouts-Font.ttf");
+*/
+useFont.preload("fonts/EvanstonTavern-1858Bold.ttf");
+
